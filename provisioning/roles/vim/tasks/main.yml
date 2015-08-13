@@ -1,0 +1,40 @@
+---
+# Install and configure vim
+
+
+- name: Install vim
+  apt: name={{item}} state=present
+  with_items:
+    - vim
+    - git
+
+#- name: Uploading vim dir
+#  synchronize: src=../files/vim dest=/home/vagrant/
+
+#- name: Moving vim dir into place
+#  command: mv /home/vagrant/vim /home/vagrant/.vim
+- name: Create vim dir
+  file: path=/home/vagrant/.vim state=directory owner=vagrant group=vagrant
+
+- name: Create subdir for colors
+  file: path=/home/vagrant/.vim/colors state=directory owner=vagrant group=vagrant
+
+- name: Download molokai
+  sudo: no
+  command: wget -P /home/vagrant/.vim/colors https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim
+
+- name: Upload vimrc
+  copy: src=../files/vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant
+
+- name: Cloning Vundle
+  sudo: no
+  git: repo=https://github.com/gmarik/Vundle.vim.git
+       dest=/home/vagrant/.vim/bundle/Vundle.vim
+
+- name: Run vundle install
+  sudo: no
+  command: vim +PluginInstall! +qall
+
+#- name: Upload vimrc
+#  copy: src=../files/vimrc dest=/home/vagrant/.vimrc owner=vagrant group=vagrant
+

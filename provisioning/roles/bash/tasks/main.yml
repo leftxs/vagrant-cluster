@@ -1,0 +1,6 @@
+---
+# Give a nice bash
+
+- name: Upload bashrc
+  copy: src=../files/bashrc dest=/home/vagrant/.bashrc owner=vagrant group=vagrant
+

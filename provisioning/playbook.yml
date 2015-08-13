@@ -1,0 +1,12 @@
+---
+
+- name: Doing the last setup steps
+  hosts: all
+  user: vagrant
+  sudo: yes
+
+  roles:
+   - upgrade
+   - motd
+   - bash
+   - vim
